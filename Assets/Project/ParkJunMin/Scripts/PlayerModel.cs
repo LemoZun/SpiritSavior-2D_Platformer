@@ -7,11 +7,12 @@ namespace Project.ParkJunMin.Scripts
     [System.Serializable]
     public class PlayerModel
     {
-        public enum Nature {Red, Blue}
+        public enum Nature {Red, Blue} // 플레이어 속성
         
         [Flags]
-        public enum Ability
+        public enum Ability 
         {
+            // 능력 해금이 필요한 상태들
             None = 0,
             Tag = 1 << 0,
             Dash = 1 << 1,

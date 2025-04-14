@@ -7,7 +7,8 @@ namespace Project.ParkJunMin.Scripts.States
     public abstract class PlayerState : BaseState
     {
         protected readonly PlayerController player;
-        protected PlayerModel.Nature prevNature;
+        protected PlayerModel.Nature prevNature; // 플레이어의 현재 속성
+        // 플레이어 첫 생성시 보유 어빌리티 초기화
         public PlayerModel.Ability ability = PlayerModel.Ability.None;
         protected int animationIndex;
 

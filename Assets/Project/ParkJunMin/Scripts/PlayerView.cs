@@ -78,11 +78,16 @@ namespace Project.ParkJunMin.Scripts
             }
         }
 
+        /// <summary>
+        /// 애니메이션 재생을 위한 메서드
+        /// </summary>
+        /// <param name="animationIndex"></param>
+        /// <exception cref="ArgumentOutOfRangeException"></exception>
         public void PlayAnimation(int animationIndex)
         {
-            if (animationIndex >= 0 && animationIndex < _animationHash.Length)
+            if (animationIndex >= 0 && animationIndex < _animationHash.Length) // 해싱된 애니메이션 파라미터
             {
-                switch (_playerModel.curNature)
+                switch (_playerModel.curNature) // 플레이어의 현재 속성에 맞는 애니메이션 재생
                 {
                     case PlayerModel.Nature.Red:
                         animator.Play(_animationHash[animationIndex],0,0);

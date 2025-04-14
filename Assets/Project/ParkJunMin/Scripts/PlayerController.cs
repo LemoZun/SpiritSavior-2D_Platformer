@@ -10,11 +10,28 @@ namespace Project.ParkJunMin.Scripts
 {
     public partial class PlayerController : MonoBehaviour
     {
-        public enum State { Idle, Run, Dash, Jump, DoubleJump, Fall, Land, WallGrab, WallSliding, WallJump, Damaged, WakeUp, Dead, Spawn, Size }
+        public enum State 
+        {
+            Idle, 
+            Run, 
+            Dash, 
+            Jump, 
+            DoubleJump, 
+            Fall, 
+            Land, 
+            WallGrab, 
+            WallSliding,
+            WallJump, 
+            Damaged, 
+            WakeUp, 
+            Dead, 
+            Spawn, 
+            Size 
+        }
         [FormerlySerializedAs("_curState")] [SerializeField] private State curState;
         private readonly PlayerState[] _states = new PlayerState[(int)State.Size];
 
-        [HideInInspector] public PlayerModel.Ability unlockedAbilities = PlayerModel.Ability.None;
+        public PlayerModel.Ability unlockedAbilities = PlayerModel.Ability.None;
         public PlayerModel playerModel = new PlayerModel();
         [HideInInspector] public PlayerView playerView;
 
@@ -223,8 +240,9 @@ namespace Project.ParkJunMin.Scripts
                 _states[(int)curState].Enter();
             }
 
-            // 어빌리티가 해금됐는지 확인하는 과정
             //방안2. 중복 코드를 줄임
+            // 어빌리티가 해금됐는지 확인하는 과정
+            // 전환되려는 상태가 해금이 필요한 상태인지, 그렇다면 플레이어가 해금한 상태인지 확인함
             if (_states[(int)nextState].ability != PlayerModel.Ability.None &&
                 !HasAbility(_states[(int)nextState].ability))
                 return;
@@ -360,17 +378,21 @@ namespace Project.ParkJunMin.Scripts
                 jumpBufferCounter -= Time.deltaTime;
         }
 
+        // 어빌리티 해금을 위한 메서드
         public void UnlockAbility(PlayerModel.Ability ability)
         {
+            // 이미 해금한 능력이라면 종료
             if (HasAbility(ability))
                 return;
             
-            unlockedAbilities |= ability;
+            // 비트연산으로 어빌리티 해금 후 이벤트 전송
+            unlockedAbilities |= ability; 
             playerModel.UnlockAbilityEvent(ability);
         }
 
         private bool HasAbility(PlayerModel.Ability ability)
         {
+            // 해당 어빌리티를 가지고 있는지 판단함
             return (unlockedAbilities & ability) == ability;
         }
 
